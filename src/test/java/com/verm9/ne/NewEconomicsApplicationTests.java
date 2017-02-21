@@ -1,4 +1,4 @@
-package com.verm9;
+package com.verm9.ne;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
