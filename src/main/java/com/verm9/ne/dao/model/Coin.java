@@ -1,5 +1,6 @@
 package com.verm9.ne.dao.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,8 +8,12 @@ import java.util.List;
 /**
  * Created by verm9 on 2/21/2017.
  */
+@MappedSuperclass
 abstract public class Coin {
+    @Id
+    @Column(name="shortName")
     protected String shortName;
+    @OneToMany(targetEntity=Position.class, fetch=FetchType.EAGER)
     protected List<Position> positions;
 
     public Coin() {
@@ -19,9 +24,14 @@ abstract public class Coin {
         this.positions.add(position);
     }
 
+    @Entity
     public static class Position {
+        @Id
+        @Column(name="timestamp")
         private LocalDateTime time;
+        @Column(name="price")
         private double price;
+        @Column(name="difficulty")
         private double difficulty;
 
         public Position(LocalDateTime time, double price, double difficulty) {
