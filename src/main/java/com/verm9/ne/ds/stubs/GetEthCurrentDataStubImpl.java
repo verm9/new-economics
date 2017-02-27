@@ -13,8 +13,8 @@ public class GetEthCurrentDataStubImpl implements GetCurrentData{
     @Override
     public Coin get() {
         EthCoin ethCoin = new EthCoin();
-        Coin.Position position = new Coin.Position(LocalDateTime.now(), 13.3, 137_368_362_000_000D);
-        ethCoin.addPosition(position);
+        EthCoin.Timepoint timepoint = new EthCoin.Timepoint(LocalDateTime.now(), 13.3, 137_368_362_000_000D);
+        ethCoin.addTimepoint(timepoint);
         return ethCoin;
     }
 }
