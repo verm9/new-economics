@@ -1,11 +1,9 @@
-package com.verm9.ne.dao.model;
+package com.verm9.ne.repository.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.verm9.ne.dao.model.EthCoin.Timepoint;
 
 /**
  * Created by verm9 on 2/21/2017.
@@ -16,7 +14,7 @@ abstract public class Coin {
     @Id
     @Column(name="shortName")
     protected String shortName;
-    @OneToMany(targetEntity=Timepoint.class, fetch=FetchType.EAGER)
+    @OneToMany(targetEntity=Timepoint.class, fetch=FetchType.LAZY)
     protected List<Timepoint> timepoints;
 
     public Coin() {

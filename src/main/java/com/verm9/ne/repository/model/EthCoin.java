@@ -1,10 +1,8 @@
-package com.verm9.ne.dao.model;
+package com.verm9.ne.repository.model;
 
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 /**
