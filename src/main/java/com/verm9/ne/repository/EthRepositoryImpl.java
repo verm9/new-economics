@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,6 +35,13 @@ public class EthRepositoryImpl implements CoinRepository {
     @Override
     @Transactional
     public void upsertCoin(Coin coin) {
-        entityManager.persist(coin);
+        try {
+            entityManager.persist(coin);
+        } catch (ConstraintViolationException e) {
+            entityManager.merge(coin);
+        }
+        for (Coin.Timepoint t : coin.getTimepoints()) {
+            entityManager.persist(t);
+        }
     }
 }

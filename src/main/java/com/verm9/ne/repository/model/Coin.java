@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * Created by verm9 on 2/21/2017.
  */
-@MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity
 abstract public class Coin {
     @Id
     @Column(name="shortName")
@@ -48,6 +48,8 @@ abstract public class Coin {
     @Entity
     abstract public static class Timepoint {
         @Id
+        @GeneratedValue(strategy=GenerationType.TABLE)
+        private Long id;
         @Column(name="timestamp")
         private LocalDateTime time;
         @Column(name="price")
@@ -61,7 +63,10 @@ abstract public class Coin {
             this.difficulty = difficulty;
         }
 
-        // --[Positions getters and setters]----------------
+        protected Timepoint() {
+        }
+
+        // --[Timepoints getters and setters]----------------
         public LocalDateTime getTime() {
             return time;
         }
@@ -85,6 +90,6 @@ abstract public class Coin {
         public void setDifficulty(double difficulty) {
             this.difficulty = difficulty;
         }
-        // --[End of Positions getters and setters]----------------
+        // --[End of Timepoints getters and setters]----------------
     }
 }

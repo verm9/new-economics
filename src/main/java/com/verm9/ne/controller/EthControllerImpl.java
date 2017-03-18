@@ -23,6 +23,7 @@ public class EthControllerImpl implements CoinController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<Timepoint> getAllTimepoints() {
+        System.out.println();
         return service.getAllTimepoints();
     }
 
