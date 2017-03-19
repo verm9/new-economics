@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
+    <script src="js/sendMainPageData.js"></script>
+    <title>Hello</title>
+</head>
+<body>
+<div class="container">
+    <form method="POST" id="calcForm" action="javascript:void(null);" onsubmit="call()">
+        <legend>Input data to perform profit calculations for a month: </legend>
+        <div class="form-group"><label for="diff">diff:</label><input id="diff" name="diff" value="197764644483694.0" type="number"/></div>
+        <div class="form-group"><label for="blockTime">blockTime:</label><input id="blockTime" name="blockTime" value="14.36" type="number"/></div>
+        <div class="form-group"><label for="blockReward">blockReward:</label><input id="blockReward" name="blockReward" value="4.85" type="number"/></div>
+        <div class="form-group"><label for="gpuPrice">gpuPrice:</label><input id="gpuPrice" name="gpuPrice" value="21000" type="number"/></div>
+        <div class="form-group"><label for="gpuHashrate">gpuHashrate in MH/s:</label><input id="gpuHashrate" name="gpuHashrate" value="29.5" type="number"/></div>
+        <div class="form-group"><label for="gpuWatt">gpuWatt:</label><input id="gpuWatt" name="gpuWatt" value="190" type="number"/></div>
+        <div class="form-group"><label for="wattPriceInRub">wattPriceInRub:</label><input id="wattPriceInRub" name="wattPriceInRub" value="4.12" type="number"/></div>
+        <div class="form-group"><label for="cryptoCurrencyToBtc">cryptoCurrencyToBtc:</label><input id="cryptoCurrencyToBtc" name="cryptoCurrencyToBtc" value="0.0365" type="number"/></div>
+        <div class="form-group"><label for="btcToUsd">btcToUsd:</label><input id="btcToUsd" name="btcToUsd" value="960" type="number"/></div>
+        <div class="form-group"><label for="usdToRub">usdToRub:</label><input id="usdToRub" name="usdToRub" value="58" type="number"/></div>
+        <div class="form-group"><label for="fees">fees+downtime percent:</label><input id="fees" name="fees" value="5" type="number"/></div>
+        <div class="form-group"><input value="Send" type="submit"/></div>
+    </form>
+</div>
+</body>
+</html>
