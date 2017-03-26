@@ -18,7 +18,7 @@ public class EthServiceImpl implements CoinService {
     private CoinRepository dao;
 
     @Autowired
-    @Qualifier("getEthCurrentDataStubImpl")
+    @Qualifier("getEthCurrentDataImpl")
     private GetCurrentData ds;
 
     @Override
