@@ -4,28 +4,131 @@
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"/>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
     <script src="js/sendMainPageData.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"/>
+    <script src="https://code.highcharts.com/modules/exporting.js"/>
+    <script src="js/charts.js"></script>
+    <script src="js/script.js"></script>
     <title>Hello</title>
 </head>
 <body>
-<div class="container">
-    <form method="POST" id="calcForm" action="javascript:void(null);" onsubmit="call()">
-        <legend>Input data to perform profit calculations for a month: </legend>
-        <div class="form-group"><label for="diff">diff:</label><input id="diff" name="diff" value="197764644483694.0" type="number"/></div>
-        <div class="form-group"><label for="blockTime">blockTime:</label><input id="blockTime" name="blockTime" value="14.36" type="number"/></div>
-        <div class="form-group"><label for="blockReward">blockReward:</label><input id="blockReward" name="blockReward" value="4.85" type="number"/></div>
-        <div class="form-group"><label for="gpuPrice">gpuPrice:</label><input id="gpuPrice" name="gpuPrice" value="21000" type="number"/></div>
-        <div class="form-group"><label for="gpuHashrate">gpuHashrate in MH/s:</label><input id="gpuHashrate" name="gpuHashrate" value="29.5" type="number"/></div>
-        <div class="form-group"><label for="gpuWatt">gpuWatt:</label><input id="gpuWatt" name="gpuWatt" value="190" type="number"/></div>
-        <div class="form-group"><label for="wattPriceInRub">wattPriceInRub:</label><input id="wattPriceInRub" name="wattPriceInRub" value="4.12" type="number"/></div>
-        <div class="form-group"><label for="cryptoCurrencyToBtc">cryptoCurrencyToBtc:</label><input id="cryptoCurrencyToBtc" name="cryptoCurrencyToBtc" value="0.0365" type="number"/></div>
-        <div class="form-group"><label for="btcToUsd">btcToUsd:</label><input id="btcToUsd" name="btcToUsd" value="960" type="number"/></div>
-        <div class="form-group"><label for="usdToRub">usdToRub:</label><input id="usdToRub" name="usdToRub" value="58" type="number"/></div>
-        <div class="form-group"><label for="fees">fees+downtime percent:</label><input id="fees" name="fees" value="5" type="number"/></div>
-        <div class="form-group"><input value="Send" type="submit"/></div>
-    </form>
+<div class="container main-container">
+    <div class="row">
+        <div class="col-xs-5 left-wrap">
+            <form method="POST" id="calcForm" action="javascript:void(null);" onsubmit="call()">
+
+                <legend>Input data to perform profit calculations for a month: </legend>
+
+                <div class="row">
+                    <div class="form-group col-xs-6">
+                        <label for="diff">diff:</label>
+                        <input id="diff" name="diff" value="197764644483694.0" type="number" class="form-control"/>
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label for="blockTime">blockTime:</label>
+                        <input id="blockTime" name="blockTime" value="14.36" type="number" class="form-control"/>
+                    </div>
+
+                    <div class="form-group col-xs-3">
+                        <label for="blockReward">blockReward:</label>
+                        <input id="blockReward" name="blockReward" value="4.85" type="number" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-4">
+                        <label for="gpuPrice">gpuPrice:</label>
+                        <input id="gpuPrice" name="gpuPrice" value="21000" type="number" class="form-control"/>
+                    </div>
+
+                    <div class="form-group col-xs-5">
+                        <label for="gpuHashrate">gpuHashrate in MH/s:</label>
+                        <input id="gpuHashrate" name="gpuHashrate" value="29.5" type="number" class="form-control"/>
+                    </div>
+
+                    <div class="form-group col-xs-3">
+                        <label for="gpuWatt">gpuWatt:</label>
+                        <input id="gpuWatt" name="gpuWatt" value="190" type="number" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-3">
+                        <label for="wattPriceInRub">wattPriceInRub:</label>
+                        <input id="wattPriceInRub" name="wattPriceInRub" value="4.12" type="number" class="form-control"/>
+                    </div>
+
+                    <div class="form-group col-xs-4">
+                        <label for="cryptoCurrencyToBtc">cryptoCurrencyToBtc:</label>
+                        <input id="cryptoCurrencyToBtc" name="cryptoCurrencyToBtc" value="0.0365" type="number" class="form-control"/>
+                    </div>
+
+                    <div class="form-group col-xs-5">
+                        <label for="btcToUsd">btcToUsd:</label>
+                        <input id="btcToUsd" name="btcToUsd" value="960" type="number" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-6">
+                        <label for="usdToRub">usdToRub:</label>
+                        <input id="usdToRub" name="usdToRub" value="58" type="number" class="form-control"/>
+                    </div>
+
+                    <div class="form-group col-xs-6">
+                        <label for="fees">fees+downtime percent:</label>
+                        <input id="fees" name="fees" value="5" type="number" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 button-block">
+                    <input value="Send" type="submit" class="btn btn-default btn-lg pull-right"/>
+                </div>
+            </form>
+        </div>
+
+        <div class="chart-block col-xs-7">
+            <div id="chart"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 table-block">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>title1</th>
+                    <th>title2</th>
+                    <th>title3</th>
+                    <th>title4</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>var1</td>
+                    <td>null</td>
+                    <td>null</td>
+                    <td>null</td>
+                </tr>
+                <tr>
+                    <td>var2</td>
+                    <td>null</td>
+                    <td>null</td>
+                    <td>null</td>
+                </tr>
+                <tr>
+                    <td>var3</td>
+                    <td>null</td>
+                    <td>null</td>
+                    <td>ynull</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>
