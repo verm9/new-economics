@@ -21,8 +21,8 @@ public class EthCoin extends Coin {
         public EthTimepoint() {
         }
 
-        public EthTimepoint(LocalDateTime time, double price, double difficulty) {
-            super(time, price, difficulty);
+        public EthTimepoint(LocalDateTime time, double price, double totalHashRate) {
+            super(time, price, totalHashRate);
         }
     }
 }

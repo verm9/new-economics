@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by verm9 on 2/21/2017.
+ * Created by verm9 on 2/21/2017
  */
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
@@ -54,13 +54,13 @@ abstract public class Coin {
         private LocalDateTime time;
         @Column(name="price")
         private double price;
-        @Column(name="difficulty")
-        private double difficulty;
+        @Column(name="totalHashRate")
+        private double totalHashRate;
 
-        public Timepoint(LocalDateTime time, double price, double difficulty) {
+        public Timepoint(LocalDateTime time, double price, double totalHashRate) {
             this.time = time;
             this.price = price;
-            this.difficulty = difficulty;
+            this.totalHashRate = totalHashRate;
         }
 
         protected Timepoint() {
@@ -83,12 +83,12 @@ abstract public class Coin {
             this.price = price;
         }
 
-        public double getDifficulty() {
-            return difficulty;
+        public double getTotalHashRate() {
+            return totalHashRate;
         }
 
-        public void setDifficulty(double difficulty) {
-            this.difficulty = difficulty;
+        public void setTotalHashRate(double totalHashRate) {
+            this.totalHashRate = totalHashRate;
         }
         // --[End of Timepoints getters and setters]----------------
     }
