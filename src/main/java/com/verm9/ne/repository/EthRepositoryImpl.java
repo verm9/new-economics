@@ -1,7 +1,6 @@
 package com.verm9.ne.repository;
 
-import com.verm9.ne.repository.model.Coin;
-import com.verm9.ne.repository.model.EthCoin;
+import com.verm9.ne.repository.model.EthTimepoint;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,33 +14,38 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by verm on 3/5/2017.
+ * Created by verm on 3/5/2017
  */
 @Repository
-public class EthRepositoryImpl implements CoinRepository {
+public class EthRepositoryImpl {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Override
-    public Collection<Coin.Timepoint> getAllTimepoints() {
+    public Collection<EthTimepoint> getAllTimepoints() {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<EthCoin.EthTimepoint> cq = builder.createQuery(EthCoin.EthTimepoint.class);
-        Root<EthCoin.EthTimepoint> root = cq.from(EthCoin.EthTimepoint.class);
+        CriteriaQuery<EthTimepoint> cq = builder.createQuery(EthTimepoint.class);
+        Root<EthTimepoint> root = cq.from(EthTimepoint.class);
         cq.select(root);
-        return (List<Coin.Timepoint>)(List<?>)entityManager.createQuery(cq).getResultList();
+        return (List<EthTimepoint>)(List<?>)entityManager.createQuery(cq).getResultList();
     }
 
-    @Override
     @Transactional
-    public void upsertCoin(Coin coin) {
+    public void upsertTimePoint(EthTimepoint timepoint) {
         try {
-            entityManager.persist(coin);
+            CriteriaQuery<EthTimepoint> criteria = entityManager.getCriteriaBuilder().createQuery(EthTimepoint.class);
+            Root<EthTimepoint> timepointRoot = criteria.from(EthTimepoint.class);
+            criteria.select(timepointRoot);
+            criteria.where(entityManager.getCriteriaBuilder().equal(timepointRoot.get("time"), timepoint.getTime()));
+            List<EthTimepoint> timepointsFromDb = entityManager.createQuery(criteria).getResultList();
+
+            // Do not insert duplicates by timestamp.
+            if (timepointsFromDb.size() == 0) {
+                entityManager.persist(timepoint);
+            }
         } catch (ConstraintViolationException e) {
-            entityManager.merge(coin);
+            e.printStackTrace();
         }
-        for (Coin.Timepoint t : coin.getTimepoints()) {
-            entityManager.persist(t);
-        }
+
     }
 }

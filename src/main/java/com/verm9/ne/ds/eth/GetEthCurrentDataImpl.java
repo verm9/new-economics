@@ -4,30 +4,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.verm9.ne.ds.GetCurrentData;
 import com.verm9.ne.ds.model.whattomine.Ethereum;
 import com.verm9.ne.ds.model.whattomine.WhatToMinePojo;
-import com.verm9.ne.repository.model.Coin;
 import com.verm9.ne.repository.model.EthCoin;
+import com.verm9.ne.repository.model.EthTimepoint;
 import org.jsoup.Jsoup;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
- * Created by verm9 on 2/21/2017.
+ * Created by verm9 on 2/21/2017
  */
 @Component("getEthCurrentDataImpl")
 public class GetEthCurrentDataImpl implements GetCurrentData {
 
     public static final String HTTP_WHATTOMINE_COM_COINS_JSON = "http://whattomine.com/coins.json";
-    @Autowired
-    @Qualifier("ethCoin")
-    private Coin coin;
+
+    private EthCoin coin;
 
     /**
      * Gets data from external resources for this moment of time.
@@ -35,7 +27,7 @@ public class GetEthCurrentDataImpl implements GetCurrentData {
      * POJO structure created by http://www.jsonschema2pojo.org
      */
     @Override
-    public EthCoin get() {
+    public EthTimepoint getTimepoint() {
         // Get JSON
         String jsonInString = null;
         try {
@@ -56,14 +48,12 @@ public class GetEthCurrentDataImpl implements GetCurrentData {
             e.printStackTrace();
         }
 
-        EthCoin result = new EthCoin();
+        EthTimepoint result;
         Ethereum ethereumPojo = whatToMinePojo.getCoins().getEthereum();
 
-        List<Coin.Timepoint> timepoints = new LinkedList<>();
-        timepoints.add(  new EthCoin.EthTimepoint( LocalDateTime.ofInstant(Instant.ofEpochSecond(ethereumPojo.getTimestamp()), ZoneId.systemDefault()),
+        result = new EthTimepoint( ethereumPojo.getTimestamp(),
                 ethereumPojo.getExchangeRate24(),
-                Double.valueOf(ethereumPojo.getNethash()) )  );
-        result.setTimepoints(timepoints);
+                Double.valueOf(ethereumPojo.getNethash()) );
 
         return result;
     }

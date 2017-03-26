@@ -1,6 +1,6 @@
 package com.verm9.ne.controller;
 
-import com.verm9.ne.repository.model.Coin.Timepoint;
+import com.verm9.ne.repository.model.EthTimepoint;
 import com.verm9.ne.repository.model.Profit;
 import com.verm9.ne.service.CoinService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,8 @@ public class EthControllerImpl implements CoinController {
     private CoinService service;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Collection<Timepoint> getAllTimepoints() {
-        System.out.println();
-        return service.getAllTimepoints();
+    public Collection<EthTimepoint> getAllTimepoints() {
+        return (Collection<EthTimepoint>)service.getAllTimepoints();
     }
 
     @RequestMapping(path="/save", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

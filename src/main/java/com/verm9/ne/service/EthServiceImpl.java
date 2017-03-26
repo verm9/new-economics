@@ -1,8 +1,8 @@
 package com.verm9.ne.service;
 
 import com.verm9.ne.ds.GetCurrentData;
-import com.verm9.ne.repository.CoinRepository;
-import com.verm9.ne.repository.model.Coin;
+import com.verm9.ne.repository.EthRepositoryImpl;
+import com.verm9.ne.repository.model.EthTimepoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,21 +15,21 @@ import java.util.Collection;
 @Service
 public class EthServiceImpl implements CoinService {
     @Autowired
-    private CoinRepository dao;
+    private EthRepositoryImpl dao;
 
     @Autowired
     @Qualifier("getEthCurrentDataImpl")
     private GetCurrentData ds;
 
     @Override
-    public Collection<Coin.Timepoint> getAllTimepoints() {
+    public Collection<EthTimepoint> getAllTimepoints() {
         return dao.getAllTimepoints();
     }
 
     @Override
     public boolean saveCurrentData() {
-        Coin coin = ds.get();
-        dao.upsertCoin(coin);
+        EthTimepoint coin = (EthTimepoint) ds.getTimepoint();
+        dao.upsertTimePoint(coin);
         return true;
     }
 }
