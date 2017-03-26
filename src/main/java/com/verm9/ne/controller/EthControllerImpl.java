@@ -52,7 +52,7 @@ public class EthControllerImpl implements CoinController {
 
         // Calculate crypto currency gained for a Month
         double blocksPerMonth = 60*60*24*30 / blockTime;
-        double discoveredBlocksByMe = blocksPerMonth * (gpuHashrate / netHashRate * 1_000_000); // in MH/s
+        double discoveredBlocksByMe = blocksPerMonth * (gpuHashrate * 1_000_000 /* in MH/s*/ / netHashRate);
         double cryptoCoinsGained = discoveredBlocksByMe * blockReward;
         double rubWastedForWatts = gpuWatt/1000 * wattPriceInRub * 24 * 30;
         double cryptoCoinsWastedForWatts = rubWastedForWatts / usdToRub / btcToUsd / cryptoCurrencyToBtc;
