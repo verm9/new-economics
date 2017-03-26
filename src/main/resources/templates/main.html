@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -25,8 +25,8 @@
 
                 <div class="row">
                     <div class="form-group col-xs-6">
-                        <label for="netHashRate" title="Some text will be here!">diff:</label>
-                        <input id="netHashRate" name="netHashRate" value="15087740000000" type="number" class="form-control"/>
+                        <label for="netHashRate" title="Some text will be here!">netHashRate:</label>
+                        <input id="netHashRate" name="netHashRate" value="15087740000000" th:value="${#numbers.formatDecimal(netHashRate, 10, 0)}" type="number" class="form-control"/>
                     </div>
                     <div class="form-group col-xs-3">
                         <label for="blockTime">blockTime:</label>
@@ -64,7 +64,7 @@
 
                     <div class="form-group col-xs-4">
                         <label for="cryptoCurrencyToBtc">cryptoCurrencyToBtc:</label>
-                        <input id="cryptoCurrencyToBtc" name="cryptoCurrencyToBtc" value="0.0365" type="number" class="form-control"/>
+                        <input id="cryptoCurrencyToBtc" name="cryptoCurrencyToBtc" value="0.0365" th:value="${cryptoCurrencyToBtc}" type="number" class="form-control"/>
                     </div>
 
                     <div class="form-group col-xs-5">
@@ -76,17 +76,17 @@
                 <div class="row">
                     <div class="form-group col-xs-6">
                         <label for="usdToRub">usdToRub:</label>
-                        <input id="usdToRub" name="usdToRub" value="58" type="number" class="form-control"/>
+                        <input id="usdToRub" name="usdToRub" value="57" type="number" class="form-control"/>
                     </div>
 
                     <div class="form-group col-xs-6">
                         <label for="fees">fees+downtime percent:</label>
-                        <input id="fees" name="fees" value="5" type="number" class="form-control"/>
+                        <input id="fees" name="fees" value="10" type="number" class="form-control"/>
                     </div>
                 </div>
 
                 <div class="form-group col-xs-12 button-block">
-                    <input value="Send" type="submit" class="btn btn-default btn-lg pull-right"/>
+                    <input value="Send" type="submit" class="btn btn-default btn-lg pull-right btn-danger"/>
                 </div>
             </form>
         </div>
@@ -95,43 +95,33 @@
             <div id="chart"></div>
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="profitTable">
         <div class="col-xs-12 block">
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>title1</th>
-                    <th>title2</th>
-                    <th>title3</th>
-                    <th>title4</th>
+                    <th>profitInCryptoCurrency</th>
+                    <th>profitInBtc</th>
+                    <th>profitInUsd</th>
+                    <th>profitInRub</th>
+                    <th>wastedPowerInRub</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>var1</td>
-                    <td>null</td>
-                    <td>null</td>
-                    <td>null</td>
-                </tr>
-                <tr>
-                    <td>var2</td>
-                    <td>null</td>
-                    <td>null</td>
-                    <td>null</td>
-                </tr>
-                <tr>
-                    <td>var3</td>
-                    <td>null</td>
-                    <td>null</td>
-                    <td>ynull</td>
+                    <td><span id="profitInCryptoCurrencyTd"></span></td>
+                    <td><span id="profitInBtcTd"></span></td>
+                    <td><span id="profitInUsdTd"></span></td>
+                    <td><span id="profitInRubTd"></span></td>
+                    <td><span id="wastedPowerInRubTd"></span></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="roiDiv">
         <div class="col-lg-12 block">
-            <p></p>
+            <p id="roiParagraph"></p>
         </div>
     </div>
 </div>

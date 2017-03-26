@@ -1,10 +1,12 @@
 package com.verm9.ne.repository;
 
 import com.verm9.ne.repository.model.EthTimepoint;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -47,5 +49,11 @@ public class EthRepositoryImpl {
             e.printStackTrace();
         }
 
+    }
+
+    public EthTimepoint getLastTimepoint() {
+        String queryString = "select e from EthTimepoint e WHERE e.time IN (SELECT max(e2.time) from EthTimepoint e2)";
+        Query query = entityManager.createQuery(queryString);
+        return (EthTimepoint) query.getResultList().get(0);
     }
 }

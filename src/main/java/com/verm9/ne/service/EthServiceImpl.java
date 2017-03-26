@@ -26,6 +26,10 @@ public class EthServiceImpl implements CoinService {
         return dao.getAllTimepoints();
     }
 
+    public EthTimepoint getLastTimepoint() {
+        return dao.getLastTimepoint();
+    }
+
     @Override
     public boolean saveCurrentData() {
         EthTimepoint coin = (EthTimepoint) ds.getTimepoint();

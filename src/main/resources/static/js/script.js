@@ -8,9 +8,14 @@ var main = {
      */
     initChart: function() {
       Chart.init();
+    },
+    initProfitTableAndRoiDiv: function () {
+        $('#roiDiv').hide();
+        $('#profitTable').hide();
     }
 };
 
 $(document).ready(function(){
     main.initChart();
+    main.initProfitTableAndRoiDiv();
 });
