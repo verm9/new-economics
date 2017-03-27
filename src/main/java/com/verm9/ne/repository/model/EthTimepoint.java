@@ -11,13 +11,13 @@ public class EthTimepoint {
     @GeneratedValue(strategy= GenerationType.TABLE)
     private Long id;
     @Column(name="timestamp")
-    private long time;
+    private Long time;
     @Column(name="price")
-    private double price;
+    private Double price;
     @Column(name="totalHashRate")
-    private double totalHashRate;
+    private Double totalHashRate;
 
-    public EthTimepoint(long time, double price, double totalHashRate) {
+    public EthTimepoint(Long time, Double price, Double totalHashRate) {
         this.time = time;
         this.price = price;
         this.totalHashRate = totalHashRate;
@@ -27,27 +27,27 @@ public class EthTimepoint {
     }
 
     // --[Timepoints getters and setters]----------------
-    public long getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public double getTotalHashRate() {
+    public Double getTotalHashRate() {
         return totalHashRate;
     }
 
-    public void setTotalHashRate(double totalHashRate) {
+    public void setTotalHashRate(Double totalHashRate) {
         this.totalHashRate = totalHashRate;
     }
     // --[End of Timepoints getters and setters]----------------

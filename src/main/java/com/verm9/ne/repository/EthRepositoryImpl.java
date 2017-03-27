@@ -54,6 +54,10 @@ public class EthRepositoryImpl {
     public EthTimepoint getLastTimepoint() {
         String queryString = "select e from EthTimepoint e WHERE e.time IN (SELECT max(e2.time) from EthTimepoint e2)";
         Query query = entityManager.createQuery(queryString);
-        return (EthTimepoint) query.getResultList().get(0);
+        List resultList = query.getResultList();
+        if (resultList.size() > 0) {
+            return (EthTimepoint) resultList.get(0);
+        }
+        return null;
     }
 }

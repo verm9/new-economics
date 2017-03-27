@@ -6,5 +6,5 @@ import org.springframework.ui.Model;
  * Created by verm on 3/18/2017.
  */
 public interface MainController {
-    Object getMainPage(Model model);
+    Object getMainPage(Model model  );
 }
