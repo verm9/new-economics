@@ -1,5 +1,7 @@
 package com.verm9.ne.service;
 
+import com.verm9.ne.repository.model.EthTimepoint;
+
 import java.util.Collection;
 
 /**
@@ -8,5 +10,5 @@ import java.util.Collection;
 public interface CoinService {
     Collection<?> getAllTimepoints();
 
-    boolean saveCurrentData();
+    EthTimepoint saveCurrentData();
 }

@@ -31,9 +31,9 @@ public class EthServiceImpl implements CoinService {
     }
 
     @Override
-    public boolean saveCurrentData() {
+    public EthTimepoint saveCurrentData() {
         EthTimepoint coin = (EthTimepoint) ds.getTimepoint();
         dao.upsertTimePoint(coin);
-        return true;
+        return coin;
     }
 }
