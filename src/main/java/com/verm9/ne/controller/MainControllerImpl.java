@@ -31,7 +31,7 @@ public class MainControllerImpl implements MainController {
         EthTimepoint lastTimepoint = Optional.ofNullable(service.getLastTimepoint()).orElse(new EthTimepoint());
 
         model.addAttribute( "netHashRate", Optional.ofNullable(lastTimepoint.getTotalHashRate()).orElse(15087740000000D) );
-        model.addAttribute( "cryptoCurrencyToBtc", Precision.round(Optional.ofNullable(lastTimepoint.getPrice()).orElse(0.0365),    4) );
+        model.addAttribute( "cryptoCurrencyToBtc", Precision.round(Optional.ofNullable(lastTimepoint.getPrice()).orElse(0.0365),4) );
         return "main";
     }
 

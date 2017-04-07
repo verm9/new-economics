@@ -3,6 +3,7 @@ package com.verm9.ne.controller;
 import com.verm9.ne.repository.model.EthTimepoint;
 import com.verm9.ne.repository.model.Profit;
 import com.verm9.ne.service.CoinService;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,11 +59,11 @@ public class EthControllerImpl implements CoinController {
         double clearProfitInCryptoCoins = (cryptoCoinsGained - cryptoCoinsWastedForWatts) * (1-fees/100);
         double profitInRub = clearProfitInCryptoCoins * cryptoCurrencyToBtc * btcToUsd * usdToRub;
 
-        result.setProfitInCryptoCurrency(clearProfitInCryptoCoins);
-        result.setProfitInBtc(clearProfitInCryptoCoins * cryptoCurrencyToBtc);
-        result.setProfitInUsd(clearProfitInCryptoCoins * cryptoCurrencyToBtc * btcToUsd);
-        result.setProfitInRub(profitInRub);
-        result.setWastedPowerInRub(rubWastedForWatts);
+        result.setProfitInCryptoCurrency( Precision.round(clearProfitInCryptoCoins,4) );
+        result.setProfitInBtc( Precision.round(clearProfitInCryptoCoins * cryptoCurrencyToBtc, 4) );
+        result.setProfitInUsd( Precision.round(clearProfitInCryptoCoins * cryptoCurrencyToBtc * btcToUsd, 2) );
+        result.setProfitInRub( Precision.round(profitInRub,0) );
+        result.setWastedPowerInRub( Precision.round(rubWastedForWatts, 0) );
         result.setRoiDays(gpuPrice / (profitInRub / 30) );
         return result;
     }
