@@ -2,6 +2,7 @@ package com.verm9.ne.controller;
 
 import com.verm9.ne.repository.model.EthTimepoint;
 import com.verm9.ne.service.EthServiceImpl;
+import org.apache.commons.math3.util.Precision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class MainControllerImpl implements MainController {
         EthTimepoint lastTimepoint = Optional.ofNullable(service.getLastTimepoint()).orElse(new EthTimepoint());
 
         model.addAttribute( "netHashRate", Optional.ofNullable(lastTimepoint.getTotalHashRate()).orElse(15087740000000D) );
-        model.addAttribute( "cryptoCurrencyToBtc", Optional.ofNullable(lastTimepoint.getPrice()).orElse(0.0365) );
+        model.addAttribute( "cryptoCurrencyToBtc", Precision.round(Optional.ofNullable(lastTimepoint.getPrice()).orElse(0.0365),    4) );
         return "main";
     }
 
