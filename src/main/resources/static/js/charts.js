@@ -1,52 +1,69 @@
-/**
- * Created by eignatik on 3/26/17.
- */
-var Chart = {
-    init: function() {
-        Highcharts.chart('chart', {
+$(document).ready(function() {
 
-            title: {
-                text: 'Solar Employment Growth by Sector, 2010-2016'
-            },
+    var options = {
+        chart: {
+            renderTo: 'chart',
+            type: 'spline'
+        },
+		yAxis: [{ 
+			title: {
+				text: 'totalHashRate'
+			}
+		}, { 
+			title: {
+				text: 'BTC price'
+			},
+			opposite: 1
+		}, { 
+			title: {
+				text: 'ROI days'
+			},
+			opposite: 1
+		}],
+		xAxis: { type: 'datetime' },
+        series: []
+    };
+	
+	var totalHashRate = {
+		yAxis: 0,
+		name: 'totalHashRate',
+		data: []
+	};
+	var btcPrice = {
+		yAxis: 1,
+		name: 'BTC price in ETH',
+		data: []
+	};
+	var roi = {
+		yAxis: 2,
+		name: 'ROI (days)',
+		data: []
+	};
 
-            subtitle: {
-                text: 'Source: thesolarfoundation.com'
-            },
+    $.getJSON('./js/data.json', function(data) {
+		data.forEach(function(item, i, data) {
+			var time = item.time * 1000;
+			totalHashRate.data.push([time, item.totalHashRate]);
+			btcPrice.data.push([time, item.price]);
+		
+			// get some ROI calculations from the server
+			// let the request execute until roi is pushed to options
+			$.ajaxSetup({
+				async: false
+			});
+			if (i % 10 == 0) {
+				$.getJSON('./js/dataROI.json', function(roiData) {
+					console.log(roi.data);
+					roi.data.push([time, roiData.roiDays]);
+				});
+			}
+		});
+		
+        options.series.push(totalHashRate);
+		options.series.push(btcPrice);
+		console.log(roi);
+		options.series.push(roi);
+        var chart = new Highcharts.Chart(options);
+    });
 
-            yAxis: {
-                title: {
-                    text: 'Number of Employees'
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
-
-            plotOptions: {
-                series: {
-                    pointStart: 2010
-                }
-            },
-
-            series: [{
-                name: 'Installation',
-                data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-            }, {
-                name: 'Manufacturing',
-                data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-            }, {
-                name: 'Sales & Distribution',
-                data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-            }, {
-                name: 'Project Development',
-                data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-            }, {
-                name: 'Other',
-                data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-            }]
-
-        });
-    }
-};
+});

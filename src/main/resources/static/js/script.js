@@ -6,9 +6,9 @@ var main = {
     /**
      * init chart function (from charts.js)
      */
-    initChart: function() {
+    /*initChart: function() {
       Chart.init();
-    },
+    },*/
     initProfitTableAndRoiDiv: function () {
         $('#roiDiv').hide();
         $('#profitTable').hide();
@@ -16,6 +16,6 @@ var main = {
 };
 
 $(document).ready(function(){
-    main.initChart();
+    //main.initChart();
     main.initProfitTableAndRoiDiv();
 });
