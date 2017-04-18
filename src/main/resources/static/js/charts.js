@@ -1,4 +1,19 @@
 $(document).ready(function() {
+    var msg = $('#calcForm').serialize();
+    function callEthRoiCalculations(time) {
+        var form = $('#calcForm').clone();
+        $.ajax({
+            type: 'GET',
+            url: '/eth/doCalculationsForAMonth',
+            data: msg,
+            success: function (data) {
+                roi.data.push([time, data.roiDays]);
+            },
+            error: function (xhr, str) {
+                alert('Возникла ошибка: ' + xhr.responseCode);
+            }
+        });
+    }
 
     var options = {
         chart: {
@@ -52,16 +67,12 @@ $(document).ready(function() {
 				async: false
 			});
 			if (i % 10 == 0) {
-				$.getJSON('./js/dataROI.json', function(roiData) {
-					console.log(roi.data);
-					roi.data.push([time, roiData.roiDays]);
-				});
+                callEthRoiCalculations(time);
 			}
 		});
 		
         options.series.push(totalHashRate);
 		options.series.push(btcPrice);
-		console.log(roi);
 		options.series.push(roi);
         var chart = new Highcharts.Chart(options);
     });
