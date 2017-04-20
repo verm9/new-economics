@@ -55,7 +55,7 @@ $(document).ready(function() {
 		data: []
 	};
 
-    $.getJSON('./js/data.json', function(data) {
+    $.getJSON('./eth/', function(data) {
 		data.forEach(function(item, i, data) {
 			var time = item.time * 1000;
 			totalHashRate.data.push([time, item.totalHashRate]);
@@ -67,7 +67,7 @@ $(document).ready(function() {
 				async: false
 			});
 			if (i % 10 == 0) {
-                callEthRoiCalculations(time);
+                roi.data.push([time, callEthRoiCalculations(time)]);
 			}
 		});
 		

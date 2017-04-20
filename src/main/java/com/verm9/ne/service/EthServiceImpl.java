@@ -36,4 +36,8 @@ public class EthServiceImpl implements CoinService {
         dao.upsertTimePoint(coin);
         return coin;
     }
+
+    public EthTimepoint getClosestTimepoint(long timestamp) {
+        return dao.getClosestTimepoint(timestamp);
+    }
 }

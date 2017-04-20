@@ -60,4 +60,15 @@ public class EthRepositoryImpl {
         }
         return null;
     }
+
+    public EthTimepoint getClosestTimepoint(long timestamp) {
+        String queryString = "select e from EthTimepoint e ORDER BY ABS(timestamp - :xtimestamp) LIMIT 1";
+        Query query = entityManager.createQuery(queryString);
+        query.setParameter("xtimestamp", timestamp);
+        List resultList = query.getResultList();
+        if (resultList.size() > 0) {
+            return (EthTimepoint) resultList.get(0);
+        }
+        return null;
+    }
 }

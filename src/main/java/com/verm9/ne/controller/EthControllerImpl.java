@@ -67,5 +67,47 @@ public class EthControllerImpl implements CoinController {
         result.setRoiDays(gpuPrice / (profitInRub / 30) );
         return result;
     }
+	
+    @RequestMapping(path="/calcRoiForTheTime", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Double doCalculationsForAMonth(
+            @RequestParam(value = "netHashRate") double netHashRate,
+            @RequestParam(value = "blockTime") double blockTime, // in seconds
+            @RequestParam(value = "blockReward") double blockReward,
+            @RequestParam(value = "gpuPrice") double gpuPrice,
+            @RequestParam(value = "gpuHashrate") double gpuHashrate,
+            @RequestParam(value = "gpuWatt") double gpuWatt,
+            @RequestParam(value = "wattPriceInRub") double wattPriceInRub, // for a KW/h
+            @RequestParam(value = "cryptoCurrencyToBtc") double cryptoCurrencyToBtc,
+            @RequestParam(value = "btcToUsd") double btcToUsd,
+            @RequestParam(value = "usdToRub") double usdToRub,
+            @RequestParam(value = "fees") double fees, // percent
+            @RequestParam(value = "timestamp") long timestamp) { 
+        Profit profit = new Profit();
+
+        // Get the closest to the passed timestamp.
+        System.out.println("+++++++++++++++++++++++++++++++++");
+        System.out.println(netHashRate);
+        EthTimepoint ethTimepoint = service.getClosestTimepoint(timestamp);
+        netHashRate = ethTimepoint.getTotalHashRate();
+        cryptoCurrencyToBtc = ethTimepoint.getPrice();
+        System.out.println(netHashRate);
+
+        // Calculate crypto currency gained for a Month
+        double blocksPerMonth = 60*60*24*30 / blockTime;
+        double discoveredBlocksByMe = blocksPerMonth * (gpuHashrate * 1_000_000 /* in MH/s*/ / netHashRate); 
+        double cryptoCoinsGained = discoveredBlocksByMe * blockReward;
+        double rubWastedForWatts = gpuWatt/1000 * wattPriceInRub * 24 * 30;
+        double cryptoCoinsWastedForWatts = rubWastedForWatts / usdToRub / btcToUsd / cryptoCurrencyToBtc;
+        double clearProfitInCryptoCoins = (cryptoCoinsGained - cryptoCoinsWastedForWatts) * (1-fees/100);
+        double profitInRub = clearProfitInCryptoCoins * cryptoCurrencyToBtc * btcToUsd * usdToRub;
+
+        profit.setProfitInCryptoCurrency( Precision.round(clearProfitInCryptoCoins,4) );
+        profit.setProfitInBtc( Precision.round(clearProfitInCryptoCoins * cryptoCurrencyToBtc, 4) );
+        profit.setProfitInUsd( Precision.round(clearProfitInCryptoCoins * cryptoCurrencyToBtc * btcToUsd, 2) );
+        profit.setProfitInRub( Precision.round(profitInRub,0) );
+        profit.setWastedPowerInRub( Precision.round(rubWastedForWatts, 0) );
+        profit.setRoiDays(gpuPrice / (profitInRub / 30) );
+        return profit.getRoiDays();
+    }
 
 }

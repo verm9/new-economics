@@ -11,4 +11,6 @@ public interface CoinService {
     Collection<?> getAllTimepoints();
 
     EthTimepoint saveCurrentData();
+
+    EthTimepoint getClosestTimepoint(long timestamp);
 }
