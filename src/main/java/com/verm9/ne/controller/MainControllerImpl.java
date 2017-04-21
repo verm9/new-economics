@@ -27,6 +27,7 @@ public class MainControllerImpl implements MainController {
     @Override
     @RequestMapping("/")
     public String getMainPage(Model model) {
+        LOG.info("The main page has been accessed");
 
         EthTimepoint lastTimepoint = Optional.ofNullable(service.getLastTimepoint()).orElse(new EthTimepoint());
 

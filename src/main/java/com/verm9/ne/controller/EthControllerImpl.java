@@ -4,6 +4,8 @@ import com.verm9.ne.repository.model.EthTimepoint;
 import com.verm9.ne.repository.model.Profit;
 import com.verm9.ne.service.CoinService;
 import org.apache.commons.math3.util.Precision;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,9 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/eth")
 public class EthControllerImpl implements CoinController {
+
+    private Logger LOG = LoggerFactory.getLogger(MainControllerImpl.class);
+
     @Autowired
     private CoinService service;
 
@@ -48,6 +53,7 @@ public class EthControllerImpl implements CoinController {
             @RequestParam(value = "btcToUsd") double btcToUsd,
             @RequestParam(value = "usdToRub") double usdToRub,
             @RequestParam(value = "fees") double fees) { // percent
+        LOG.info("The doCalculationsForAMonth controller has been accessed");
         Profit result = new Profit();
 
         // Calculate crypto currency gained for a Month
