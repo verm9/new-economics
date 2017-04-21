@@ -85,12 +85,9 @@ public class EthControllerImpl implements CoinController {
         Profit profit = new Profit();
 
         // Get the closest to the passed timestamp.
-        System.out.println("+++++++++++++++++++++++++++++++++");
-        System.out.println(netHashRate);
-        EthTimepoint ethTimepoint = service.getClosestTimepoint(timestamp);
+        EthTimepoint ethTimepoint = service.getClosestTimepoint(timestamp/1000); // We got timestamp in millis from the UI
         netHashRate = ethTimepoint.getTotalHashRate();
         cryptoCurrencyToBtc = ethTimepoint.getPrice();
-        System.out.println(netHashRate);
 
         // Calculate crypto currency gained for a Month
         double blocksPerMonth = 60*60*24*30 / blockTime;

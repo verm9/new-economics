@@ -21,4 +21,7 @@ function call() {
         }
     });
 
+    // Redraw the chart
+    drawChart();
+
 }
