@@ -62,9 +62,10 @@ public class EthRepositoryImpl {
     }
 
     public EthTimepoint getClosestTimepoint(long timestamp) {
-        String queryString = "select e from EthTimepoint e ORDER BY ABS(timestamp - :xtimestamp) LIMIT 1";
+        String queryString = "select e from EthTimepoint e ORDER BY ABS(timestamp - :xtimestamp)";
         Query query = entityManager.createQuery(queryString);
         query.setParameter("xtimestamp", timestamp);
+        query.setMaxResults(1);
         List resultList = query.getResultList();
         if (resultList.size() > 0) {
             return (EthTimepoint) resultList.get(0);

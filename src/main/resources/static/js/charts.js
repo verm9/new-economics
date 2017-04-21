@@ -1,16 +1,20 @@
 $(document).ready(function() {
-    var msg = $('#calcForm').serialize();
+
+    /**
+     * Sends data to get ROI on the specific time. And pushed a retrieved data to charts options.
+     */
     function callEthRoiCalculations(time) {
-        var form = $('#calcForm').clone();
+        var msg = $('#calcForm').serialize();
+        msg = msg + "&timestamp=" + time;
         $.ajax({
             type: 'GET',
-            url: '/eth/doCalculationsForAMonth',
+            url: '/eth/calcRoiForTheTime',
             data: msg,
-            success: function (data) {
-                roi.data.push([time, data.roiDays]);
+            success: function(data) {
+                roi.data.push([time, data]);
             },
-            error: function (xhr, str) {
-                alert('Возникла ошибка: ' + xhr.responseCode);
+            error:  function(xhr, str){
+                alert('Error has occured: ' + xhr.responseCode);
             }
         });
     }
@@ -67,7 +71,7 @@ $(document).ready(function() {
 				async: false
 			});
 			if (i % 10 == 0) {
-                roi.data.push([time, callEthRoiCalculations(time)]);
+			    callEthRoiCalculations(time);
 			}
 		});
 		

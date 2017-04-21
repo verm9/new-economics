@@ -22,22 +22,3 @@ function call() {
     });
 
 }
-
-/**
-* Sends data to get ROI on the specific time.
-* 
-*/
-function callEthRoiCalculations(time) {
-	var msg   = $('#calcForm').serialize();
-    $.ajax({
-        type: 'GET',
-        url: '/eth/calcRoiForTheTime',
-        data: msg + "&timestamp=" + time,
-        success: function(data) {
-            return data;
-        },
-        error:  function(xhr, str){
-            alert('Error has occured: ' + xhr.responseCode);
-        }
-    });
-}
