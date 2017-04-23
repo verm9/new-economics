@@ -1,7 +1,9 @@
 package com.verm9.ne.controller;
 
+import com.verm9.ne.repository.model.BtcTimepoint;
 import com.verm9.ne.repository.model.EthTimepoint;
 import com.verm9.ne.repository.model.Profit;
+import com.verm9.ne.service.BtcServiceImpl;
 import com.verm9.ne.service.EthServiceImpl;
 import org.apache.commons.math3.util.Precision;
 import org.slf4j.Logger;
@@ -24,19 +26,22 @@ import java.util.Collection;
 @RequestMapping("/eth")
 public class EthControllerImpl implements CoinController {
 
-    private Logger LOG = LoggerFactory.getLogger(MainControllerImpl.class);
+    private Logger LOG = LoggerFactory.getLogger(EthControllerImpl.class);
 
     @Autowired
-    private EthServiceImpl service;
+    private EthServiceImpl ethService;
+
+    @Autowired
+    private BtcServiceImpl btcService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<EthTimepoint> getAllTimepoints() {
-        return (Collection<EthTimepoint>)service.getAllTimepoints();
+        return (Collection<EthTimepoint>) ethService.getAllTimepoints();
     }
 
     @RequestMapping(path="/save", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public void saveCurrentData(HttpServletResponse response) throws IOException {
-        service.saveCurrentData();
+        ethService.saveCurrentData();
         response.sendRedirect("/eth");
     }
 
@@ -91,9 +96,12 @@ public class EthControllerImpl implements CoinController {
         Profit profit = new Profit();
 
         // Get the closest to the passed timestamp.
-        EthTimepoint ethTimepoint = service.getClosestTimepoint(timestamp/1000); // We got timestamp in millis from the UI
+        EthTimepoint ethTimepoint = ethService.getClosestTimepoint(timestamp/1000); // We got timestamp in millis from the UI
         netHashRate = ethTimepoint.getTotalHashRate();
         cryptoCurrencyToBtc = ethTimepoint.getPrice();
+
+        BtcTimepoint btcTimepoint = btcService.getClosestTimepoint(timestamp/1000); // We got timestamp in millis from the UI
+        btcToUsd = btcTimepoint.getPrice();
 
         // Calculate crypto currency gained for a Month
         double blocksPerMonth = 60*60*24*30 / blockTime;
