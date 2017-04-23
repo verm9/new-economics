@@ -1,8 +1,8 @@
 package com.verm9.ne.service;
 
 import com.verm9.ne.ds.GetCurrentData;
-import com.verm9.ne.repository.EthRepositoryImpl;
-import com.verm9.ne.repository.model.EthTimepoint;
+import com.verm9.ne.repository.BtcRepositoryImpl;
+import com.verm9.ne.repository.model.BtcTimepoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -10,36 +10,36 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 /**
- * Created by verm on 3/5/2017.
+ * Created by verm on 4/23/2017
  */
 @Service
-public class EthServiceImpl {
+public class BtcServiceImpl {
     @Autowired
-    private EthRepositoryImpl dao;
+    private BtcRepositoryImpl dao;
 
     @Autowired
-    @Qualifier("getEthCurrentDataImpl")
+    @Qualifier("getBtcCurrentDataImpl")
     private GetCurrentData ds;
 
-    public Collection<EthTimepoint> getAllTimepoints() {
+    public Collection<BtcTimepoint> getAllTimepoints() {
         return dao.getAllTimepoints();
     }
 
-    public EthTimepoint getLastTimepoint() {
+    public BtcTimepoint getLastTimepoint() {
         return dao.getLastTimepoint();
     }
 
-    public EthTimepoint saveCurrentData() {
-        EthTimepoint timepoint = (EthTimepoint) ds.getTimepoint();
+    public BtcTimepoint saveCurrentData() {
+        BtcTimepoint timepoint = (BtcTimepoint) ds.getTimepoint();
         return saveData(timepoint);
     }
 
-    public EthTimepoint saveData(EthTimepoint t) {
+    public BtcTimepoint saveData(BtcTimepoint t) {
         dao.upsertTimePoint(t);
         return t;
     }
 
-    public EthTimepoint getClosestTimepoint(long timestamp) {
+    public BtcTimepoint getClosestTimepoint(long timestamp) {
         return dao.getClosestTimepoint(timestamp);
     }
 }
