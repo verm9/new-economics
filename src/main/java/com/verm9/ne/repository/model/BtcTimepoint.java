@@ -3,27 +3,27 @@ package com.verm9.ne.repository.model;
 import javax.persistence.*;
 
 /**
- * Created by verm on 3/26/2017
+ * Created by verm on 4/23/2017
  */
 @Entity
-public class EthTimepoint {
+public class BtcTimepoint {
     @Id
     @GeneratedValue(strategy= GenerationType.TABLE)
     private Long id;
     @Column(name="timestamp")
     private Long time;
     @Column(name="price")
-    private Double price; // in BTC
+    private Double price; // in USD
     @Column(name="totalHashRate")
     private Double totalHashRate;
 
-    public EthTimepoint(Long time, Double price, Double totalHashRate) {
+    public BtcTimepoint(Long time, Double price, Double totalHashRate) {
         this.time = time;
         this.price = price;
         this.totalHashRate = totalHashRate;
     }
 
-    public EthTimepoint() {
+    public BtcTimepoint() {
     }
 
     // --[Timepoints getters and setters]----------------

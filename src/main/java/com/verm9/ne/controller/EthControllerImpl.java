@@ -2,7 +2,7 @@ package com.verm9.ne.controller;
 
 import com.verm9.ne.repository.model.EthTimepoint;
 import com.verm9.ne.repository.model.Profit;
-import com.verm9.ne.service.CoinService;
+import com.verm9.ne.service.EthServiceImpl;
 import org.apache.commons.math3.util.Precision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class EthControllerImpl implements CoinController {
     private Logger LOG = LoggerFactory.getLogger(MainControllerImpl.class);
 
     @Autowired
-    private CoinService service;
+    private EthServiceImpl service;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<EthTimepoint> getAllTimepoints() {
